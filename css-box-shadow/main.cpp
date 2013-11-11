@@ -48,8 +48,11 @@ static const char *fragment_source = {
 ""
 "void main(void){"
 "   vec4 color = texture2D(texture,gl_TexCoord[0].xy);"
-"   gl_FragColor = vec4(0.0, 1.0, 0.0, 0.5);"
-"   gl_FragColor = color;"
+//"   gl_FragColor = vec4(0.0, 1.0, 0.0, 0.5);"
+//"   gl_FragColor = color;"
+" if (color.a != 0.0) {"
+"   gl_FragColor = vec4(0.0, 1.0f, 0.0, 1.0);"
+" }"
 "}"
 };
 
@@ -88,7 +91,18 @@ bool init(void){
 
    // compiling and attaching the fragment shader onto program
    glCompileShader(fragment_shader);
-   glAttachShader(program_object, fragment_shader); 
+
+   int status;
+   glGetShaderiv(fragment_shader, GL_COMPILE_STATUS, &status);
+
+   if(status != GL_TRUE){
+     std::cout << "The shader could not be compiled\n" << std::endl;
+     char errorlog[500] = {'\0'};
+     glGetShaderInfoLog(fragment_shader, 500, 0, errorlog);
+     std::cout << "Error: " << errorlog << std::endl;
+   }
+
+   glAttachShader(program_object, fragment_shader);
    printProgramInfoLog(program_object);   // verifies if all this is ok so far
 
    // Link the shaders into a complete GLSL program.
@@ -145,7 +159,7 @@ void render(void)  {
 
 	// bind the GLSL program	
 	// this means that from here the GLSL program attends all OpenGL operations
-//	glUseProgram(program_object);
+	glUseProgram(program_object);
 
   glColor4f(1.0,0.0,0.0, 0.5);
 
@@ -182,6 +196,7 @@ void render(void)  {
   glEnd();
   glDisable(GL_TEXTURE_2D);
 
+  glUseProgram(0);
    // Swap The Buffers To Become Our Rendering Visible
    glutSwapBuffers( );
 }

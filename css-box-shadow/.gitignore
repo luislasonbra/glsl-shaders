@@ -29,3 +29,6 @@ install_manifest.txt
 
 # binaries
 glsl
+
+# other stuff
+*.png

@@ -1,7 +1,7 @@
 LIBPATH = -L./
-LDFLAGS = -lGL -lGLU -lglut
+LDFLAGS = -lGL -lGLU -lglut -lpng
 
-CFLAGS = 
+CFLAGS =
 RM = rm
 PROJ = glsl
 # add here additional object files

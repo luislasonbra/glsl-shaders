@@ -1,0 +1,31 @@
+# C++ .gitignore
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+
+#Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Eclipse project files
+.classpath
+.project
+.cproject
+.settings/
+project.properties
+
+# CMake
+CMakeFiles
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
+# binaries
+glsl
